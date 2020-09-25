@@ -6,7 +6,7 @@ services:
         restart: always
         build:
             context: ./
-            dockerfile: ./nginx/Dockerfile
+            dockerfile: ./Dockerfile
         environment:
          - VIRTUAL_HOST=vehiculos.test # Enviroment variable needed for nginx proxy
          - LETSENCRYPT_HOST=vehiculos.test # Enviroment variables needed for Let's Encrypt companion
