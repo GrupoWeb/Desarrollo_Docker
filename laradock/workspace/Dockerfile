@@ -10,7 +10,7 @@
 #    https://hub.docker.com/r/laradock/workspace/tags/
 #
 # Note: Base Image name format {image-tag}-{php-version}
-# docker pull laradock/workspace:latest-7.3
+#
 
 ARG LARADOCK_PHP_VERSION
 ARG BASE_IMAGE_TAG_PREFIX=latest
@@ -59,7 +59,6 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 # always run apt update when start and after add new source list, then clean up at end.
 RUN set -xe; \
     apt-get update -yqq && \
-    # yum update -yqq  && \
     pecl channel-update pecl.php.net && \
     groupadd -g ${PGID} laradock && \
     useradd -u ${PUID} -g laradock -m laradock -G docker_env && \
