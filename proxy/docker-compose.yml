@@ -5,7 +5,7 @@ services:
         restart: "always" # Always restart container
         ports:
          - "80:80" # Port mappings in format host:container
-         - "443:443"
+        #  - "443:443"
         networks:
          - nginx-proxy # Name of the etwork these two containers will share
         labels:
