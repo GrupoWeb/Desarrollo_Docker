@@ -18,16 +18,12 @@ services:
          - nginx-proxy # Connect this container to network named nginx-proxy, that will be described below
     php:
         container_name: php
-        image: php-frm
+        image: php:7-fpm
         expose:
             - "9000" # Expose http port
         networks:
             - nginx-proxy
-        build: 
-            context: ./
-            dockerfile: ./php/Dockerfile
-        volumes:
-            - ./php-fpm/php5.6.ini:/usr/local/etc/php/php.ini
+
             
 networks:
     nginx-proxy:
