@@ -1,0 +1,102 @@
+@import "compass/css3";
+
+body { padding: 3em; background: rgb(240,240,250); }
+a{ margin: 1em; }
+
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
+$icons: ('save' '\1F4BE'),
+        ('delete' '\12as'),
+        ('fb' '\F30E'),
+        ('twitter' '\F309'),
+        ('bolt' '\26A1'),
+        ('danger' '\26A0'),
+        ('tick' '\2713');
+;
+
+$red: rgb(235, 80, 66);
+$blue: rgb(90, 120, 255);
+$yellow: rgb(255, 255, 95);
+$green: rgb(180, 255, 92);
+$fb-blue: #3B5998;
+$twitter-blue: #4099FF;
+
+[class*=button-]{
+  display: inline-block;
+  background: #BADA55;
+  color: black;
+  font:{
+    family: sans-serif;
+    weight: 800;
+    size: .8em;
+  }
+  text:{
+    transform: uppercase;
+    decoration: none;
+  }
+  padding: 1.2em 2.3em;
+  border-radius: .7em;
+  position: relative;
+  @include transition(.3s);
+  
+  &:active {
+    @include transform(scale(.92));
+  }
+      
+  &:before, &:after{
+    display: inline-block;
+    font-family: entypo;
+    position: absolute;    
+  }
+}
+
+@mixin button($bg, $icon:none, $iconPosition: right){
+  background: $bg;
+  $color: black;
+  @each $thing in $icons{
+    @if nth($thing, 1) == $icon {
+      @if $iconPosition == right {  
+        padding-right: 3.5em;
+              
+        &:after {
+          content: nth($thing, 2);
+          right: 1.5em;
+        }
+      }
+      @if $iconPosition == left {  
+         padding-left: 3.5em;
+            
+        &:before {
+          content: nth($thing, 2);
+          left: 1.5em;
+        }
+      }
+    }
+  }
+  @if lightness($bg) > 68% {
+    $color: desaturate(darken($bg, 35), 70);
+    &:hover, &:focus {
+      background: darken($bg, 5);
+      color: darken($color, 5);
+    }
+  }
+  @else {
+    $color: lighten($bg, 35);
+    &:hover, &:focus {
+      background: darken($bg, 5);
+      color: lighten($color, 5);
+    }
+  }
+
+  color: $color;
+  &:hover, &:focus {
+    box-shadow: 0 0 0 5px lighten($bg, 20);
+  }
+}
+
+.button-danger  { @include button($red, 'danger')   ;}
+.button-signup  { @include button($blue, 'tick', left)  ;}
+.button-save    { @include button($green,'save', right);}
+.button-fb      { @include button($fb-blue, 'fb', left); }
+.button-twitter { @include button($twitter-blue, 'twitter', left); }
+.button-power { @include button($yellow, 'bolt', right); }

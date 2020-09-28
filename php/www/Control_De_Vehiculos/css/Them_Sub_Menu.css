@@ -1,0 +1,140 @@
+text {
+	color: white;
+	
+	font-size: 20px;
+	font-family: Segoe UI;
+	text-align: right;
+}
+
+
+/* Curso CSS estilos aprenderaprogramar.com*/
+body {font-family: Arial, Helvetica, sans-serif;}
+
+a:hover
+{
+    background: cadetblue;    
+}
+
+th {     font-size: 9px;     font-weight: normal;     padding: 8px;     background: #b9c9fe;
+    border-top: 4px solid #aabcfe;    border-bottom: 1px solid #fff; color: #039; }
+
+td {    padding: 8px;     background: #e8edff;     border-bottom: 1px solid #fff;
+    color: #669;    border-top: 1px solid transparent; }
+
+tr:hover td { background: #d0dafd; color: #339; }
+
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: relative;
+  }
+#main-header {
+    background: white;
+    top: 0;
+    position: fixed;
+	z-index: 1;
+}   
+    #main-header a {
+        color: white;
+    }
+    
+   
+   
+   
+   
+#main-content {
+    background: white;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+	 position: relative;
+	 top:250px;
+}
+
+    #main-content header,
+    #main-content .content {
+        padding: 40px;
+    }
+    
+	
+#pie
+
+{
+width:auto;
+height:12px;
+
+
+font-size:15px;
+font-family:"Segoe UI";
+font-style:normal;
+font-color:white;
+border-top-color:black;
+background:#0099FF;
+
+
+}
+
+
+#pie2
+
+{
+	font-size:12px;
+	width:800px;
+	font-family:"Segoe UI";
+	font-style:normal;
+	font-color:black;
+	border-top-color:#666666;
+	background:white;
+	color: black;
+	right: 300cm;
+
+}
+	
+	
+#estilo1{
+
+background:#003399;
+width:auto;
+height:160px;
+
+
+}
+
+#pie3
+
+{
+	font-size:12px;
+	width:1387px;
+	height:80px;
+	font-family:"Segoe UI";
+	font-style:normal;
+	font-color: white;
+	border-top-color:black;
+	background:#999999;
+	color:#FFFFFF;
+	right: 300cm;
+
+}
+
+
+#tit
+{
+font-size:24px;
+font-family:Arial, Helvetica, sans-serif;
+
+}
+
+#pagina
+{height:auto;
+}
+
+
+#div1 {
+ position:absolute;
+ top:10%;
+ left:20px;
+ width:350px;
+ height:680px;
+ background:white;
+}
+.Estilo11 {font-size: 16px}
