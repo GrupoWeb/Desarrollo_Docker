@@ -10,6 +10,7 @@ services:
          - "8080:80"
         volumes: 
             - ./www/Control_De_Vehiculos:/var/www/html
+            - ./www/SistemaLogueo:/var/www/html
 
 volumes:
     www: {}           
