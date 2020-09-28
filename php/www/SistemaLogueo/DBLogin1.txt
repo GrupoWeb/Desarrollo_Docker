@@ -1,0 +1,65 @@
+use syslogin;
+
+create table Tusuario(
+id_usu integer not null identity(1,1) primary key,
+nombre1 varchar(35),
+nombre2 varchar(40),
+apellidop varchar(40),
+apellidom varchar(40),
+usuario varchar(35),
+passwordd varchar(100),
+fecha_crea datetime NOT NULL DEFAULT GETDATE(),
+estado integer,
+)
+go
+
+create table Tsistema(
+id_sistema integer not null identity(1,1) primary key,
+Nombre_sys varchar(100),
+ruta_sistema varchar(150)
+)
+go
+
+create table Trol(
+id_rol integer not null identity(1,1) primary key,
+Nombre_rol varchar(50),
+fecha_crea datetime NOT NULL DEFAULT GETDATE(),
+)
+go
+
+create table Tlinks(
+id_link integer not null identity(1,1) primary key,
+id_sistema integer,
+nombre_link varchar(150),
+)
+go
+
+create table Tasignacion(
+id_asignacion integer not null identity(1,1) primary key,
+id_usu integer,
+id_sistema integer,
+id_rol integer,
+id_link integer,
+fecha_asig datetime NOT NULL DEFAULT GETDATE()
+
+)
+go
+
+
+
+insert into Tusuario (nombre1, nombre2, apellidop, apellidom, usuario, passwordd, estado)values
+('Cristian','Antonio','Aguilar','Barahona','claguila','claguilar',1);
+
+select *from Tusuario;
+
+
+insert into Tusuario (nombre1, nombre2, apellidop, apellidom, usuario, passwordd, estado)values
+('Kevin','Emilio','de Paz','Hernandez','Kdepaz',HashBytes('MD5','Kdepaz'),1);
+
+select *from Tusuario;
+SELECT SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('MD5', 'Kdepaz')), 3, 32) AS MD5
+
+insert into Tusuario (nombre1, nombre2, apellidop, apellidom, usuario, passwordd, estado)values
+('Kevin','Emilio','de Paz','Hernandez','Kdepaz',HashBytes('MD5','Kdepaz'),1);
+
+select *from Tusuario;
