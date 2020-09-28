@@ -1,0 +1,140 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+body {
+  padding: 3em;
+  background: #f0f0fa;
+}
+
+a {
+  margin: 1em;
+}
+
+[class*=button-] {
+  display: inline-block;
+  background: #BADA55;
+  color: black;
+  font-family: sans-serif;
+  font-weight: 800;
+  font-size: .8em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.2em 2.3em;
+  border-radius: .7em;
+  position: relative;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+[class*=button-]:active {
+  -moz-transform: scale(0.92);
+  -ms-transform: scale(0.92);
+  -webkit-transform: scale(0.92);
+  transform: scale(0.92);
+}
+[class*=button-]:before, [class*=button-]:after {
+  display: inline-block;
+  font-family: entypo;
+  position: absolute;
+}
+
+.button-danger {
+  background: #eb5042;
+  padding-right: 3.5em;
+  color: #fce5e3;
+}
+.button-danger:after {
+  content: "\26A0";
+  right: 1.5em;
+}
+.button-danger:hover, .button-danger:focus {
+  background: #e93b2b;
+  color: #fffbfa;
+}
+.button-danger:hover, .button-danger:focus {
+  box-shadow: 0 0 0 5px #f5a59e;
+}
+
+.button-signup {
+  background: #5a78ff;
+  padding-left: 3.5em;
+  color: white;
+}
+.button-signup:before {
+  content: "\2713";
+  left: 1.5em;
+}
+.button-signup:hover, .button-signup:focus {
+  background: #4163ff;
+  color: white;
+}
+.button-signup:hover, .button-signup:focus {
+  box-shadow: 0 0 0 5px #c0cbff;
+}
+
+.button-save {
+  background: #b4ff5c;
+  padding-right: 3.5em;
+  color: #566e3b;
+}
+.button-save:after {
+  content: "\1F4BE";
+  right: 1.5em;
+}
+.button-save:hover, .button-save:focus {
+  background: #a8ff43;
+  color: #495d32;
+}
+.button-save:hover, .button-save:focus {
+  box-shadow: 0 0 0 5px #e3ffc2;
+}
+
+.button-fb {
+  background: #3b5998;
+  padding-left: 3.5em;
+  color: #a8b9dd;
+}
+.button-fb:before {
+  content: "\F30E";
+  left: 1.5em;
+}
+.button-fb:hover, .button-fb:focus {
+  background: #344e86;
+  color: #bbc8e4;
+}
+.button-fb:hover, .button-fb:focus {
+  box-shadow: 0 0 0 5px #718dc8;
+}
+
+.button-twitter {
+  background: #4099ff;
+  padding-left: 3.5em;
+  color: #f3f8ff;
+}
+.button-twitter:before {
+  content: "\F309";
+  left: 1.5em;
+}
+.button-twitter:hover, .button-twitter:focus {
+  background: #268bff;
+  color: white;
+}
+.button-twitter:hover, .button-twitter:focus {
+  box-shadow: 0 0 0 5px #a6cfff;
+}
+
+.button-power {
+  background: #ffff5f;
+  padding-right: 3.5em;
+  color: #6f6f3c;
+}
+.button-power:after {
+  content: "\26A1";
+  right: 1.5em;
+}
+.button-power:hover, .button-power:focus {
+  background: #ffff45;
+  color: #5f5f33;
+}
+.button-power:hover, .button-power:focus {
+  box-shadow: 0 0 0 5px #ffffc5;
+}
