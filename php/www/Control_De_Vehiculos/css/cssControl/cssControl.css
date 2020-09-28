@@ -1,0 +1,47 @@
+ .titulo {
+  background: #339999;
+  color: #ffffff;
+  font-size: 1.2em;
+}
+
+
+.table .thead-dark th {
+  color: #fff;
+  background-color: #212529;
+  border-color: #32383e;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-dark.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.tabla{
+    width:80%;
+    float:left;
+}
+
+table{
+    width: 100%;
+}
+
+.encabezado{
+    text-align: center;
+    padding: 30px 5px 30px 5px !important;
+    font-size: 1.5em;
+}
+
+.titulo{
+        width: 10%;
+}
+
+.dato{
+    width: 20%;
+}
+
+.container{
+    width: 100% !important;
+   
+    border:1px solid #000 !important;
+}
