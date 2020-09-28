@@ -10,6 +10,7 @@ services:
          - "8080:80"
         volumes: 
             - ./www:/var/www/html
+            - ./config:/usr/local/etc/php
 
 volumes:
     www: {}           
