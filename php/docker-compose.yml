@@ -21,8 +21,9 @@ services:
         restart: always
         depends_on: 
           - php
-        ports: 
-            - "80:80"
+        expose:
+            - "80" # Expose http port
+            - "443" # along with https port
         volumes_from: 
             - php
 
