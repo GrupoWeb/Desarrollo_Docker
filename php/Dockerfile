@@ -76,9 +76,9 @@ RUN apt-get clean \
 ENV VOLUME_PATH /var/www/html/public
 
 # Move files
-COPY src/ /var/www/html/
+# COPY src/ /var/www/html/
 
-COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+# COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/html/
 
