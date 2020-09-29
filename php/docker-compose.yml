@@ -1,31 +1,31 @@
 version: '3'
 services:
     php:
-        image: jtabet/php-ext-sqlsrv
-        # build:
-        #     context: ./
-        #     dockerfile: Dockerfile
+        # image: jtabet/php-ext-sqlsrv
+        build:
+            context: ./
+            dockerfile: Dockerfile
         container_name: php-server
         restart: always
-        # ports:
-        #  - "8080:80"
+        ports:
+         - "80:80"
         volumes: 
             - ./www:/var/www/html
             # - ./pdo:/usr/local/lib/php/extensions/no-debug-non-zts-20170718
     
-    nginx:
-        build: 
-            context: ./nginx
-            dockerfile: Dockerfile
-        container_name: nginx
-        restart: always
-        depends_on: 
-          - php
-        expose:
-            - "80" # Expose http port
-            - "443" # along with https port
-        volumes_from: 
-            - php
+    # nginx:
+    #     build: 
+    #         context: ./nginx
+    #         dockerfile: Dockerfile
+    #     container_name: nginx
+    #     restart: always
+    #     depends_on: 
+    #       - php
+    #     expose:
+    #         - "80" # Expose http port
+    #         - "443" # along with https port
+    #     volumes_from: 
+    #         - php
 
 volumes:
     www: {}           
