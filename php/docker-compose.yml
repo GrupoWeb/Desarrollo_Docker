@@ -12,7 +12,6 @@ services:
          - "80:80"
         volumes: 
             - ./www:/var/www/html
-        network_mode: host
             # - ./pdo:/usr/local/lib/php/extensions/no-debug-non-zts-20170718
     
     # nginx:
