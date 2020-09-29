@@ -1,68 +1,86 @@
 # FROM piquet/php72-mssql-docker:latest
 # # FROM gjuniioor/php-sqlsrv:latest
-# # FROM php:7.2-apache
+# FROM php:7.2-apache
+FROM php:7.1-apache
 
+# Get repository and install wget and vim
+RUN apt-get update && apt-get install --no-install-recommends -y \
+        wget \
+        gnupg \
+        git \
+        unzip
 
+# Install PHP extensions deps
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        zlib1g-dev \
+        libicu-dev \
+        g++ \
+        unixodbc-dev \
+        libxml2-dev \
+        libaio-dev \
+        libmemcached-dev \
+        freetds-dev \
+        libssl-dev \
+        openssl
 
-FROM ubuntu:16.04
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+        --install-dir=/usr/local/bin \
+        --filename=composer
 
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
+    && pecl install sqlsrv-5.6.1 \
+    && pecl install pdo_sqlsrv-5.6.1 \
+    && pecl install redis \
+    && pecl install memcached \
+    && pecl install xdebug \
+    && docker-php-ext-install \
+            iconv \
+            mbstring \
+            intl \
+            mcrypt \
+            gd \
+            mysqli \
+            pdo_mysql \
+            pdo_dblib \
+            soap \
+            sockets \
+            zip \
+            pcntl \
+            ftp \
+    && docker-php-ext-enable \
+            sqlsrv \
+            pdo_sqlsrv \
+            redis \
+            memcached \
+            opcache \
+            xdebug
 
-# update package list
-RUN apt-get update
+# Install APCu and APC backward compatibility
+RUN pecl install apcu \
+    && pecl install apcu_bc-1.0.3 \
+    && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
+    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
-# install curl and git
-RUN apt-get install -y curl git
-RUN apt-get update && apt-get install -y net-tools && apt-get install -y iputils-ping
+# Clean repository
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# install apache
-RUN apt-get install -y apache2
+# The path that will be used to make Apache run under that user
+ENV VOLUME_PATH /var/www/html/public
 
-# install php
-RUN apt-get -y install php7.2 mcrypt php7.2-mcrypt php-mbstring php-pear php7.2-dev php7.2-xml
-RUN apt-get install -y libapache2-mod-php7.2
+# Move files
+COPY src/ /var/www/html/
 
-# install pre requisites
-RUN apt-get update
-RUN apt-get install -y apt-transport-https
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
-RUN apt-get install -y unixodbc-utf16
-RUN apt-get install -y unixodbc-dev-utf16
-
-# install driver sqlsrv
-RUN pecl install sqlsrv-5.6.1
-RUN echo "extension=sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
-RUN pecl install pdo_sqlsrv-5.6.1
-RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
-
-# load driver sqlsrv
-RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.2/cli/php.ini
-RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.2/cli/php.ini
-
-# install composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
-RUN mv composer.phar /usr/local/bin/composer
-
-# install ODBC Driver
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql
-RUN apt-get install -y mssql-tools
-RUN apt-get install -y unixodbc-dev
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN exec bash
-
-# install locales
-RUN apt-get install -y locales && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
-
-EXPOSE 80
+COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/html/
 
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+RUN chown -R www-data:www-data /var/www/html/ \
+    && a2enmod rewrite
