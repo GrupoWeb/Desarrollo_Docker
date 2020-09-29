@@ -79,7 +79,7 @@
 function PrintServicio(id) {
     var id2  = window.btoa(id);
     console.log(id2);
-    var printWindow = window.open("Reportes/Rservicio.php?p="+id2, 'Print');
+    var printWindow = window.open("Reportes/Rservicio.php?p="+id, 'Print');
     printWindow.focus();
     printWindow.addEventListener('load', function () {
         printWindow.print();

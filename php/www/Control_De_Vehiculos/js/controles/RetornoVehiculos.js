@@ -6,6 +6,8 @@
             var table = $('#Vehiculo').dataTable({
                     'destroy': true,
                     "bDeferRender": true,
+                    "processing": true,
+                    "serverSide": true,
                     "searching": true,
                     'pageLength': 5,
                     "blengthChange": false, 'language': {

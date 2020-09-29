@@ -62,10 +62,10 @@ include("conexion/conexion.php")
       
  	</tr>
 
-    <??>
+    
       </thead>
       <tbody>
-<?              
+<?php              
 
 
  

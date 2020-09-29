@@ -12,7 +12,7 @@
 <br><center style='font-size:1.5em'>  Solicitudes Pendientes de Aprobar </center><br>
   <div class="row">
 
-   <?
+   <?php
    session_start();
    $Usuario = $_SESSION['username'];
    include("conexion/conexion.php");

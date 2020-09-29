@@ -1,9 +1,9 @@
-
 	<link rel="stylesheet" href="css/custom.css">
 	<script src="datatables/table/datatables.js"></script>
 	<script src="datatables/table/fonts.js"></script>
 	<script src="datatables/table/pdfmake.js"></script>
 	<link rel="stylesheet" href="datatables/table/datatables.css">
+	
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="js/controles/TListarMantenimiento.js"></script>
 <body> 
@@ -51,17 +51,17 @@
 					</div>
 				</div>
 			</form>
-			<div class="row cmantenimiento">
+			<div class="row cmantenimiento container-fluid">
 				<table class="table table-hover" id="TMantenimiento">
 					<thead>
 						<tr>
 							<th>Vehiculo</th>
-							<th>KM Salida</th>
-							<th>Fecha / Hora Salida</th>
-							<th>Lugar Servicio</th>
-							<th>Tipo Servicio</th>
+							<th>Salida</th>
+							<th>Fecha</th>
+							<th>Lugar</th>
+							<th>Tipo</th>
 							<th>Motivo</th>
-							<th>Envia / Recibe</th>
+							<th>Envia</th>
 							<th>Impresión</th>
 						</tr>
 					</thead>
