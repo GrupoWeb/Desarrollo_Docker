@@ -11,7 +11,7 @@
 <br><center style='font-size:1.5em'>  Vehiculos Disponibles </center><br>
   <div class="row">
 
-   <?
+   <?php
    include("conexion/conexion.php");
 $query2 = "
 SELECT 

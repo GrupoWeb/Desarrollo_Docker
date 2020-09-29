@@ -1,9 +1,10 @@
 <?php
 session_start();
+
 $idUsuario = $_SESSION['username'];
 	require('../conexion/conexion.php');
 	
-	$Tipo_Solicitud = $_POST['TipoSolicitud'];
+	// $Tipo_Solicitud = $_POST['TipoSolicitud'];
 	
 	 $query = "
 SELECT 

@@ -5,6 +5,8 @@ $(document).ready(function () {
     function MostrarDatos(){
             var table = $('#TMantenimiento').dataTable({
                     'destroy': true,
+                    "processing": true,
+                    "serverSide": true,
                     "bDeferRender": true,
                     "searching": true,
                     'pageLength': 5,

@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+$id="";
+
 include('conexion.php');	
 
 function protecVars($str)
@@ -105,97 +108,107 @@ else {
 //	$lml= mysql_fetch_assoc($GetUser);
   //		 define('user',true) ;
 
-if ($_GET['action']=='exit')
-{
-	session_destroy();
-}
+// if ($_GET['action']=='exit')
+// {
+// 	session_destroy();
+// }
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="es" dir="ltr">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Seguridad Informatica</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/login.css" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Seguridad Informatica</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/login.css" />
 
 
 </head>
 
-<body >
-	<?php  if(user==false) { ?>
+<body>
+    <?php  if(user==false) { ?>
 
-	<div class="main">
+    <div class="main">
 
 
-		<div class="container">
-			<center>
-				<div class="middle">
-					<div id="login">
+        <div class="container">
+            <center>
+                <div class="middle">
+                    <div id="login">
 
-						<form action="" method="post">
+                        <form action="" method="post">
 
-							<fieldset class="clearfix">
-					
-								<p ><span class="fa fa-user"></span><input type="text" name="username" Placeholder="Usuario" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-								<p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Contraseña" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+                            <fieldset class="clearfix">
 
-								<div>
-									<span style="width:48%; text-align:left;  display: inline-block;"><a href="/phpformularioveta/olvidomipass.php" class="small-text" href="#">Olvidaste tu
-										contraseña?</a></span>
-										<span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Entrar"></span>
-									</div>
+                                <p><span class="fa fa-user"></span><input type="text" name="username"
+                                        Placeholder="Usuario" required></p>
+                                <!-- JS because of IE support; better: placeholder="Username" -->
+                                <p><span class="fa fa-lock"></span><input type="password" name="password"
+                                        Placeholder="Contraseña" required></p>
+                                <!-- JS because of IE support; better: placeholder="Password" -->
 
-								</fieldset>
-								<div class="clearfix"></div>
-							</form>
+                                <div>
+                                    <!-- <span style="width:48%; text-align:left;  display: inline-block;"><a
+                                            href="/phpformularioveta/olvidomipass.php" class="small-text"
+                                            href="#">Olvidaste tu  contraseña?</a></span> -->
+                                    <span style="width:50%; text-align:right;  display: inline-block;"><input
+                                            type="submit" value="Entrar"></span>
+                                </div>
 
-							<div class="clearfix"></div>
+                            </fieldset>
+                            <div class="clearfix"></div>
+                        </form>
 
-						</div> <!-- end login -->
-						<div class="logo">
-							<img src="images/logo_rpt.jpg" alt="" />
+                        <div class="clearfix"></div>
 
-							<div class="clearfix"></div>
-						</div>
+                    </div> <!-- end login -->
+                    <div class="logo">
+                        <img src="images/logo_rpt.jpg" alt="" />
 
-					</div>
-				</center>
-			</div>
+                        <div class="clearfix"></div>
+                    </div>
 
-		</div>
+                </div>
+            </center>
+        </div>
+
+    </div>
+
+
+
+
+
+    <?php } if(user==true) { ?>
+    <b> <?php
+
 		
 
 
 
-
-				<?php } if(user==true) { ?>
-				<b> <?php
-
-		
+				?></b>
 
 
-
-				?></b>	
-
-
-<!-- llamado de roles temporal
+    <!-- llamado de roles temporal
 	<meta http-equiv='Refresh' content='0;url=<? //echo $rl; ?>'>  -->
-	<meta http-equiv='Refresh' content='0;url=sistemas.php'> 
+    <meta http-equiv='Refresh' content='0;url=sistemas.php'>
 
 
-	<!-- <a href="?action=exit"> salir></a> -->
-	<?php } ?>
+    <!-- <a href="?action=exit"> salir></a> -->
+    <?php } ?>
 
-</form>
-</div>
-</div>
+    </form>
+    </div>
+    </div>
 
-</div>
-</div>
+    </div>
+    </div>
 
 </body>
+
 </html>

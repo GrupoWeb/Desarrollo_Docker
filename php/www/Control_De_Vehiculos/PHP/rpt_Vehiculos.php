@@ -1,9 +1,13 @@
 <?php
+session_start();
 	require('../conexion/conexion.php');
 
-	$fechaInicial = $_POST['fechaInicial'];
-	$fechaFinal = $_POST['fechaFinal'];
-	$Vehiculo = $_POST['vehiculo'];
+	if(isset($_POST['fechaInicial']) and isset($_POST['fechaFinal']) and isset($_POST['vehiculo'])){
+		$fechaInicial = $_POST['fechaInicial'];
+		$fechaFinal = $_POST['fechaFinal'];
+		$Vehiculo = $_POST['vehiculo'];
+	}
+
 
 	$salida = "";
 

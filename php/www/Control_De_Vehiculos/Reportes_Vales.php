@@ -160,10 +160,10 @@
       
  </tr>
 
-    <??>
+    
       </thead>
       <tbody>
- <?
+ <?php
 $query2 = "
 select * from tbVale
 ";              
