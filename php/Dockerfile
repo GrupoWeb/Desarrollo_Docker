@@ -1,32 +1,24 @@
 FROM php:7.2-apache
 
-# Get repository and install wget and vim
-# RUN apt-get update && apt-get install --no-install-recommends -y \
-#         wget \
-#         gnupg \
-#         git \
-#         unzip 
+# Install Dependencies
+RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
+    devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
+    unixodbc-dev wget unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install pdo \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# ENV ACCEPT_EULA=Y
+# Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-# # Install PHP extensions deps
-# RUN apt-get update \
-#     && apt-get install --no-install-recommends -y \
-#         libfreetype6-dev \
-#         libjpeg62-turbo-dev \
-#         libmcrypt-dev \
-#         zlib1g-dev \
-#         libicu-dev \
-#         g++ \
-#         unixodbc-dev \
-#         libxml2-dev \
-#         libaio-dev \
-#         libmemcached-dev \
-#         freetds-dev \
-#         libssl-dev \
-#         openssl
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
+    apt-transport-https \
+    msodbcsql17
 
-
+# Enable the php extensions.
+RUN pecl install pdo_sqlsrv-5.6.1 sqlsrv-5.6.1 \
+    && docker-php-ext-enable pdo_sqlsrv sqlsrv
     
 
 # Install Composer
@@ -34,75 +26,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin \
         --filename=composer
 
-RUN  pecl install sqlsrv-5.6.1 \
-    && pecl install pdo_sqlsrv-5.6.1 \
-
-# RUN   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#         && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-#         && apt-get update \
-#         && ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql17 \
-#         && install2.r odbc \
-#         && apt-get clean \
-#         && rm -rf /var/lib/apt/lists/* \
-#         && rm -rf /tmp/*
-
-# # Install PHP extensions
-# RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-#     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
-#     && pecl install sqlsrv-5.6.1 \
-#     && pecl install pdo_sqlsrv-5.6.1 \
-#     && pecl install redis \
-#     && pecl install memcached \
-#     && pecl install xdebug \
-#     && docker-php-ext-install \
-#             iconv \
-#             mbstring \
-#             intl \
-#             mcrypt \
-#             gd \
-#             mysqli \
-#             pdo_mysql \
-#             pdo_dblib \
-#             soap \
-#             sockets \
-#             zip \
-#             pcntl \
-#             ftp \
-#     && docker-php-ext-enable \
-#             sqlsrv \
-#             pdo_sqlsrv \
-#             redis \
-#             memcached \
-#             opcache \
-#             xdebug
-
-
-
-# RUN apt-get update \
-#     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#     && curl https://packages.microsoft.com/config/debian/9/prod.list \
-#         > /etc/apt/sources.list.d/mssql-release.list \
-#     && apt-get install -y --no-install-recommends \
-#         locales \
-#         apt-transport-https \
-#     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-#     && locale-gen \
-#     && apt-get update \
-#     && apt-get -y --no-install-recommends install \
-#         unixodbc-dev \
-#         msodbcsql 
-#         # msodbcsql17    
-
-
-# Install APCu and APC backward compatibility
-# RUN pecl install apcu \
-#     && pecl install apcu_bc-1.0.3 \
-#     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
-#     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
-
-# Clean repository
-# RUN apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
 
 # The path that will be used to make Apache run under that user
 ENV VOLUME_PATH /var/www/html/public
