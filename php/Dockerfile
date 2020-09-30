@@ -34,6 +34,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin \
         --filename=composer
 
+RUN  pecl install sqlsrv-5.6.1 \
+    && pecl install pdo_sqlsrv-5.6.1 \
 
 # RUN   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 #         && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
