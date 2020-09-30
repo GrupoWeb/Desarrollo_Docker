@@ -2,6 +2,13 @@
 # FROM gjuniioor/php-sqlsrv:latest
 FROM php:7.2-apache
 
+# Install Dependencies
+RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
+    devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
+    unixodbc-dev wget unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install pdo \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 RUN wget https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.5.1.1-1_amd64.apk && \
     wget https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.5.1.1-1_amd64.apk && \
@@ -13,14 +20,7 @@ RUN wget https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8
     apk del .phpize-deps && \
     rm msodbcsql17_17.5.1.1-1_amd64.apk && \
     rm mssql-tools_17.5.1.1-1_amd64.apk
-    
-# # Install Dependencies
-# RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
-#     devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
-#     unixodbc-dev wget unzip \
-#     && rm -rf /var/lib/apt/lists/* \
-#     && docker-php-ext-install pdo \
-#     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+
 
 # # Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
 # RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
