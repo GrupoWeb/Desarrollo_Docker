@@ -8,23 +8,13 @@ RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
     && docker-php-ext-install pdo \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN apt-get install -y curl wget gnupg
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
-
-# Compile odbc_config
-RUN cd /usr/local/src/ && dget -ux http://http.debian.net/debian/pool/main/u/unixodbc/unixodbc_2.3.1-3.dsc \
-    && cd unixodbc-2.3.1/ && apt-get update && dpkg-buildpackage -uc -d -us -B && cp ./exe/odbc_config /usr/local/bin/
-
-## Microsoft ODBC Driver 13 for Linux
-RUN cd /usr/local/src/ \
-    && wget https://download.microsoft.com/download/2/E/5/2E58F097-805C-4AB8-9FC6-71288AB4409D/msodbcsql-13.0.0.0.tar.gz \
-    && tar xf msodbcsql-13.0.0.0.tar.gz && cd msodbcsql-13.0.0.0/ \
-    && ldd lib64/libmsodbcsql-13.0.so.0.0; echo "RET=$?" \
-    && sed -i 's/$(uname -p)/"x86_64"/g' ./install.sh \
-    && ./install.sh install --force --accept-license
+RUN TEMP_DEB="$(mktemp)" \
+ && wget -O "$TEMP_DEB" 'https://packages.microsoft.com/debian/9/prod/pool/main/m/msodbcsql17/msodbcsql17_17.2.0.1-1_amd64.deb' \
+ && yes | dpkg --skip-same-version -i "$TEMP_DEB" \
+ && rm -f "$TEMP_DEB"
 
 # Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
 # RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
