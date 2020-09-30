@@ -1,3 +1,5 @@
 FROM webimp/php-56-apache
 
-COPY php.ini /usr/local/etc/php
+# COPY php.ini /usr/local/etc/php
+
+RUN pecl install sqlsrv
