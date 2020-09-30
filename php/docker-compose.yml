@@ -2,11 +2,11 @@ version: '3'
 
 services:
     php:
-        image: webimp/php-56-apache
+        # image: webimp/php-56-apache
         # image: jtabet/php-ext-sqlsrv
-        # build:
-        #     context: ./
-        #     dockerfile: Dockerfile
+        build:
+            context: ./
+            dockerfile: Dockerfile
         container_name: php-server
         restart: always
         ports:
