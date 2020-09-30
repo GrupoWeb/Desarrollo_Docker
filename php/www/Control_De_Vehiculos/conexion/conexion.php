@@ -1,6 +1,6 @@
 <?php
-    $serverName = "sqlsrv:Server=SistemaVehiculo\SQLEXPRESS";
-    // $serverName = "128.5.8.239";
+    // $serverName = "sqlsrv:Server=SistemaVehiculo\SQLEXPRESS";
+    $serverName = "128.5.8.85";
     $connectionInfo = array("Database" => "Control_Vehiculos", "UID"=>"sa", "PWD"=>"123456");
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     if($conn === false)

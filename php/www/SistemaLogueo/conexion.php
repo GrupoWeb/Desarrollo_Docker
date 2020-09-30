@@ -1,6 +1,6 @@
 <?php
-$serverName = "sqlsrv:Server=SISTEMAVEHICULO\SQLEXPRESS"; //serverName\instanceName
-// $serverName = "128.5.8.239"; //serverName\instanceName
+// $serverName = "sqlsrv:Server=SISTEMAVEHICULO\SQLEXPRESS"; //serverName\instanceName
+$serverName = "128.5.8.85"; //serverName\instanceName
 $connectionInfo = array( "Database"=>"syslogin", "UID"=>"sa", "PWD"=>"123456");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
