@@ -1,5 +1,6 @@
 # FROM webimp/php-56-apache
-FROM php:7.2-apache
+# FROM php:7.2-apache
+FROM gjuniioor/php-sqlsrv:latest
 
 # COPY php.ini /usr/local/etc/php
 
