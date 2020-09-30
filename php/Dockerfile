@@ -1,7 +1,7 @@
 # FROM piquet/php72-mssql-docker:latest
 # # FROM gjuniioor/php-sqlsrv:latest
 # FROM php:7.2-apache
-FROM php:7.2-apache
+FROM php:7.1-apache
 
 # Get repository and install wget and vim
 RUN apt-get update && apt-get install --no-install-recommends -y \
