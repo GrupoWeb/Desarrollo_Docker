@@ -9,22 +9,22 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 ENV ACCEPT_EULA=Y
 
-# Install PHP extensions deps
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        zlib1g-dev \
-        libicu-dev \
-        g++ \
-        unixodbc-dev \
-        libxml2-dev \
-        libaio-dev \
-        libmemcached-dev \
-        freetds-dev \
-        libssl-dev \
-        openssl
+# # Install PHP extensions deps
+# RUN apt-get update \
+#     && apt-get install --no-install-recommends -y \
+#         libfreetype6-dev \
+#         libjpeg62-turbo-dev \
+#         libmcrypt-dev \
+#         zlib1g-dev \
+#         libicu-dev \
+#         g++ \
+#         unixodbc-dev \
+#         libxml2-dev \
+#         libaio-dev \
+#         libmemcached-dev \
+#         freetds-dev \
+#         libssl-dev \
+#         openssl
 
 
     
@@ -76,20 +76,20 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 
 
-RUN apt-get update \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/9/prod.list \
-        > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get install -y --no-install-recommends \
-        locales \
-        apt-transport-https \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-    && locale-gen \
-    && apt-get update \
-    && apt-get -y --no-install-recommends install \
-        unixodbc-dev \
-        msodbcsql 
-        # msodbcsql17    
+# RUN apt-get update \
+#     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#     && curl https://packages.microsoft.com/config/debian/9/prod.list \
+#         > /etc/apt/sources.list.d/mssql-release.list \
+#     && apt-get install -y --no-install-recommends \
+#         locales \
+#         apt-transport-https \
+#     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+#     && locale-gen \
+#     && apt-get update \
+#     && apt-get -y --no-install-recommends install \
+#         unixodbc-dev \
+#         msodbcsql 
+#         # msodbcsql17    
 
 
 # Install APCu and APC backward compatibility
