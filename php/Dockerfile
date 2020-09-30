@@ -16,7 +16,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
     apt-transport-https \
-    msodbcsql unixodbc-dev
+    unixodbc-dev msodbcsql 
 
 # install SQL Server tools
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
