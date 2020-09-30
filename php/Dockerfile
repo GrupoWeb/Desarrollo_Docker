@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         wget \
         gnupg \
         git \
-        unzip
+        unzip \
+        curl apt-utils apt-transport-https debconf-utils gcc build-essential g++-5\
+        && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions deps
 RUN apt-get update \
