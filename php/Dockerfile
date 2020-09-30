@@ -1,68 +1,62 @@
-# FROM piquet/php72-mssql-docker:latest
-# FROM gjuniioor/php-sqlsrv:latest
-FROM php:7.2-apache
+FROM ubuntu:16.04
 
-# install the PHP extensions we need
-RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev unixodbc-dev wget unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install pdo \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+MAINTAINER Gildásio Júnior (gjuniioor@protonmail.com)
 
-RUN yes | pecl install xdebug \
-&& echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-&& echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-&& echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+# update package list
+RUN apt-get update
 
+# install curl and git
+RUN apt-get install -y curl git
 
-# Compile odbc_config
-RUN cd /usr/local/src/ && dget -ux http://http.debian.net/debian/pool/main/u/unixodbc/unixodbc_2.3.1-3.dsc \
-    && cd unixodbc-2.3.1/ && apt-get update && dpkg-buildpackage -uc -d -us -B && cp ./exe/odbc_config /usr/local/bin/
+# install apache
+RUN apt-get install -y apache2
 
-# Install Dependencies
-RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
-    devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
-    unixodbc-dev wget unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install pdo \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+# install php
+RUN apt-get -y install php7.0 mcrypt php7.0-mcrypt php-mbstring php-pear php7.0-dev php7.0-xml
+RUN apt-get install -y libapache2-mod-php7.0
 
-# Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
-# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#     && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# install pre requisites
+RUN apt-get update
+RUN apt-get install -y apt-transport-https
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
+RUN apt-get install -y unixodbc-utf16
+RUN apt-get install -y unixodbc-dev-utf16
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
-    && ACCEPT_EULA=Y apt-get install msodbcsql
+# install driver sqlsrv
+RUN pecl install sqlsrv
+RUN echo "extension=sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
+RUN pecl install pdo_sqlsrv
+RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
 
-# RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
-#     apt-transport-https \
-#     msodbcsql17
+# load driver sqlsrv
+RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
+RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
+RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.0/cli/php.ini
+RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/cli/php.ini
 
-# Enable the php extensions.
-RUN pecl install pdo_sqlsrv-5.8.0 sqlsrv-5.8.1 \
-    && docker-php-ext-enable pdo_sqlsrv sqlsrv
+# install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer.phar /usr/local/bin/composer
 
-# FROM php:7.1-apache
-# ENV ACCEPT_EULA=Y
+# install ODBC Driver
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql
+RUN apt-get install -y mssql-tools
+RUN apt-get install -y unixodbc-dev
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN exec bash
 
-# # Microsoft SQL Server Prerequisites
-# RUN apt-get update \
-#     && curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#     && curl -sS https://packages.microsoft.com/config/debian/9/prod.list \
-#         > /etc/apt/sources.list.d/mssql-release.list \
-#     && apt-get install -y --no-install-recommends \
-#         locales \
-#         apt-transport-https \
-#     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-#     && locale-gen \
-#     && apt-get update \
-#     && apt-get -y --no-install-recommends install \
-#         unixodbc-dev \
-#         msodbcsql17
+# install locales
+RUN apt-get install -y locales && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
-# RUN docker-php-ext-install mbstring pdo pdo_mysql \
-#     && pecl install sqlsrv pdo_sqlsrv xdebug \
-#     && docker-php-ext-enable sqlsrv pdo_sqlsrv xdebug
+EXPOSE 80
 
-# # COPY index.php /var/www/html/
+WORKDIR /var/www/html/
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
