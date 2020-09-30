@@ -19,7 +19,7 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
     msodbcsql17
 
 # Enable the php extensions.
-RUN pecl install pdo_sqlsrv-5.6.1 sqlsrv-5.6.1 \
+RUN pecl install pdo_sqlsrv-5.8.0 sqlsrv-5.8.1 \
     && docker-php-ext-enable pdo_sqlsrv sqlsrv
 
 # FROM php:7.1-apache
