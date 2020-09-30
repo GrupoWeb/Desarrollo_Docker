@@ -1,20 +1,34 @@
 FROM php:7.2-apache
 
 # Install Dependencies
-RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
+RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst apt-transport-https\
     devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
     unixodbc-dev wget unzip \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-RUN apt-get install -y curl wget gnupg
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
+RUN apt-get install -y unixodbc-utf16
+RUN apt-get install -y unixodbc-dev-utf16
 
-RUN TEMP_DEB="$(mktemp)" \
- && wget -O "$TEMP_DEB" 'https://packages.microsoft.com/debian/9/prod/pool/main/m/msodbcsql17/msodbcsql17_17.2.0.1-1_amd64.deb' \
- && yes | dpkg --skip-same-version -i "$TEMP_DEB" \
- && rm -f "$TEMP_DEB"
+# install ODBC Driver
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql
+RUN apt-get install -y mssql-tools
+RUN apt-get install -y unixodbc-dev
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN exec bash
+# RUN apt-get install -y curl wget gnupg
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+
+# RUN TEMP_DEB="$(mktemp)" \
+#  && wget -O "$TEMP_DEB" 'https://packages.microsoft.com/debian/9/prod/pool/main/m/msodbcsql17/msodbcsql17_17.2.0.1-1_amd64.deb' \
+#  && yes | dpkg --skip-same-version -i "$TEMP_DEB" \
+#  && rm -f "$TEMP_DEB"
 
 # Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
 # RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
