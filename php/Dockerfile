@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         git \
         unzip 
 
-
+ENV ACCEPT_EULA=Y
 
 # Install PHP extensions deps
 RUN apt-get update \
