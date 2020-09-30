@@ -1,13 +1,13 @@
 FROM php:7.2-apache
 
 # Get repository and install wget and vim
-RUN apt-get update && apt-get install --no-install-recommends -y \
-        wget \
-        gnupg \
-        git \
-        unzip 
+# RUN apt-get update && apt-get install --no-install-recommends -y \
+#         wget \
+#         gnupg \
+#         git \
+#         unzip 
 
-ENV ACCEPT_EULA=Y
+# ENV ACCEPT_EULA=Y
 
 # # Install PHP extensions deps
 # RUN apt-get update \
@@ -44,35 +44,35 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 #         && rm -rf /var/lib/apt/lists/* \
 #         && rm -rf /tmp/*
 
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
-    && pecl install sqlsrv-5.6.1 \
-    && pecl install pdo_sqlsrv-5.6.1 \
-    && pecl install redis \
-    && pecl install memcached \
-    && pecl install xdebug \
-    && docker-php-ext-install \
-            iconv \
-            mbstring \
-            intl \
-            mcrypt \
-            gd \
-            mysqli \
-            pdo_mysql \
-            pdo_dblib \
-            soap \
-            sockets \
-            zip \
-            pcntl \
-            ftp \
-    && docker-php-ext-enable \
-            sqlsrv \
-            pdo_sqlsrv \
-            redis \
-            memcached \
-            opcache \
-            xdebug
+# # Install PHP extensions
+# RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+#     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
+#     && pecl install sqlsrv-5.6.1 \
+#     && pecl install pdo_sqlsrv-5.6.1 \
+#     && pecl install redis \
+#     && pecl install memcached \
+#     && pecl install xdebug \
+#     && docker-php-ext-install \
+#             iconv \
+#             mbstring \
+#             intl \
+#             mcrypt \
+#             gd \
+#             mysqli \
+#             pdo_mysql \
+#             pdo_dblib \
+#             soap \
+#             sockets \
+#             zip \
+#             pcntl \
+#             ftp \
+#     && docker-php-ext-enable \
+#             sqlsrv \
+#             pdo_sqlsrv \
+#             redis \
+#             memcached \
+#             opcache \
+#             xdebug
 
 
 
@@ -93,14 +93,14 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 
 # Install APCu and APC backward compatibility
-RUN pecl install apcu \
-    && pecl install apcu_bc-1.0.3 \
-    && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
-    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+# RUN pecl install apcu \
+#     && pecl install apcu_bc-1.0.3 \
+#     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
+#     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 # Clean repository
-RUN apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # The path that will be used to make Apache run under that user
 ENV VOLUME_PATH /var/www/html/public
