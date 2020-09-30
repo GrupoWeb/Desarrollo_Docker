@@ -16,7 +16,12 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
     apt-transport-https \
-    msodbcsql17
+    msodbcsql unixodbc-dev
+
+# install SQL Server tools
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 
 # Enable the php extensions.
 RUN pecl install pdo_sqlsrv-5.8.0 sqlsrv-5.8.1 \
