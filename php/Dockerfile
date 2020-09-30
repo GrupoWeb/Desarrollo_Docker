@@ -10,11 +10,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         git \
         unzip 
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    apt-get update \
-    ACCEPT_EULA=Y apt-get install msodbcsql17
-        
+
 
 # Install PHP extensions deps
 RUN apt-get update \
@@ -32,6 +28,12 @@ RUN apt-get update \
         freetds-dev \
         libssl-dev \
         openssl
+
+RUN curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    curl -sS https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    apt-get update \
+    ACCEPT_EULA=Y apt-get install msodbcsql17
+        
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
