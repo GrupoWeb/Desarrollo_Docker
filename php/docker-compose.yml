@@ -2,7 +2,7 @@ version: '3'
 
 services:
     php:
-        image: plehr/docker-php-sqlsrv-curl
+        image: webimp/php-56-apache
         # image: jtabet/php-ext-sqlsrv
         # build:
         #     context: ./
