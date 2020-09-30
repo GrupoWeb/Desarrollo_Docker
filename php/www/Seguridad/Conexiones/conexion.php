@@ -1,5 +1,5 @@
 <?php
-$serverName = "SISTEMAVEHICULO\SQLEXPRESS";
+$serverName = "sqlsrv:Server=SISTEMAVEHICULO\SQLEXPRESS";
 $connectionInfo = array( "Database"=>"syslogin", "UID"=>"sa", "PWD"=>"123456");
 $conn = sqlsrv_connect( $serverName, $connectionInfo );
 if( $conn === false ) {
