@@ -101,7 +101,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
         unixodbc-dev \
-        msodbcsql17    
+        msodbcsql11    
 
 
 # Install APCu and APC backward compatibility
