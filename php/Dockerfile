@@ -12,6 +12,8 @@ RUN apt-get install -y curl git
 RUN apt-get install -y apache2
 
 # install php
+RUN apt-add-repository ppa:ondrej/php
+RUN apt-get update
 RUN apt-get -y install php7.2 mcrypt php7.2-mcrypt php-mbstring php-pear php7.2-dev php7.2-xml
 RUN apt-get install -y libapache2-mod-php7.2
 
