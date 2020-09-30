@@ -9,12 +9,12 @@ RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#     && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
-    apt-transport-https \
-    msodbcsql17
+# RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
+#     apt-transport-https \
+#     msodbcsql17
 
 # Enable the php extensions.
 RUN pecl install pdo_sqlsrv-5.6.1 sqlsrv-5.6.1 \
