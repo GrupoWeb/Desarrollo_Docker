@@ -33,26 +33,26 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin \
         --filename=composer
 
-# adding custom MS repository
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# # adding custom MS repository
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-# install SQL Server drivers
-RUN apt-get update && ACCEPT_EULA=Y apt-get install -y unixodbc-dev msodbcsql 
+# # install SQL Server drivers
+# RUN apt-get update && ACCEPT_EULA=Y apt-get install -y unixodbc-dev msodbcsql 
 
-# install SQL Server tools
-RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN /bin/bash -c "source ~/.bashrc"
+# # install SQL Server tools
+# RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+# RUN /bin/bash -c "source ~/.bashrc"
 
-# RUN   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#         && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-#         && apt-get update \
-#         && ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql17 \
-#         && install2.r odbc \
-#         && apt-get clean \
-#         && rm -rf /var/lib/apt/lists/* \
-#         && rm -rf /tmp/*
+RUN   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+        && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+        && apt-get update \
+        && ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql17 \
+        && install2.r odbc \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/*
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
