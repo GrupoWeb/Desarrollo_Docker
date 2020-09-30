@@ -2,22 +2,26 @@
 # FROM gjuniioor/php-sqlsrv:latest
 FROM php:7.2-apache
 
-# Install selected extensions and other stuff
-RUN apt-get update \
-    && apt-get -y --no-install-recommends install wget php-memcached php7.2-mysql php-redis php7.2-bz2 php7.2-gd php-imagick php7.2-odbc php7.2-xmlrpc php-yaml \
-    && apt-get -y install unixodbc-dev; apt-get -y install php-pear; apt-get install -y php7.2-dev;\
-    pecl install sqlsrv pdo_sqlsrv;
+# Install Dependencies
+RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
+    devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
+    unixodbc-dev wget unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install pdo \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# Install ODBC
-RUN wget https://packages.microsoft.com/ubuntu/17.04/prod/pool/main/m/msodbcsql/msodbcsql_13.1.9.1-1_amd64.deb;
-RUN apt-get -y install unixodbc libcurl3;
-RUN ACCEPT_EULA=Y \
-    dpkg -i msodbcsql_13.1.9.1-1_amd64.deb;
-RUN apt-get install -y locales \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen\
-    && locale-gen;
+# Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-    
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
+    apt-transport-https \
+    msodbcsql17
+
+# Enable the php extensions.
+RUN pecl install pdo_sqlsrv-5.6.1 sqlsrv-5.6.1 \
+    && docker-php-ext-enable pdo_sqlsrv sqlsrv
+
 # FROM php:7.1-apache
 # ENV ACCEPT_EULA=Y
 
