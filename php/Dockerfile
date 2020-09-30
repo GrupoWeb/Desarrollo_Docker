@@ -12,8 +12,8 @@ RUN apt-get install -y curl git
 RUN apt-get install -y apache2
 
 # install php
-RUN apt-get -y install php7.0 mcrypt php7.0-mcrypt php-mbstring php-pear php7.0-dev php7.0-xml
-RUN apt-get install -y libapache2-mod-php7.0
+RUN apt-get -y install php7.2 mcrypt php7.2-mcrypt php-mbstring php-pear php7.2-dev php7.2-xml
+RUN apt-get install -y libapache2-mod-php7.2
 
 # install pre requisites
 RUN apt-get update
@@ -27,15 +27,15 @@ RUN apt-get install -y unixodbc-dev-utf16
 
 # install driver sqlsrv
 RUN pecl install sqlsrv
-RUN echo "extension=sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
+RUN echo "extension=sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
 RUN pecl install pdo_sqlsrv
-RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
+RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
 
 # load driver sqlsrv
-RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.0/cli/php.ini
-RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/cli/php.ini
+RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
+RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.2/apache2/php.ini
+RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.2/cli/php.ini
+RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.2/cli/php.ini
 
 # install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
