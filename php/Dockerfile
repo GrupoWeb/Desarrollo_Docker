@@ -2,6 +2,11 @@
 # FROM gjuniioor/php-sqlsrv:latest
 FROM php:7.2-apache
 
+
+# Compile odbc_config
+RUN cd /usr/local/src/ && dget -ux http://http.debian.net/debian/pool/main/u/unixodbc/unixodbc_2.3.1-3.dsc \
+    && cd unixodbc-2.3.1/ && apt-get update && dpkg-buildpackage -uc -d -us -B && cp ./exe/odbc_config /usr/local/bin/
+    
 # Install Dependencies
 RUN apt-get update && apt-get install -y locales unixodbc libgss3 odbcinst \
     devscripts debhelper dh-exec dh-autoreconf libreadline-dev libltdl-dev \
