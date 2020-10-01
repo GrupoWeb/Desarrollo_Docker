@@ -1,4 +1,4 @@
-FROM arshey/laragon
+FROM leokhoa/laragon
 # FROM robsonggade/lampp-server
 # FROM tomsik68/xampp
 
