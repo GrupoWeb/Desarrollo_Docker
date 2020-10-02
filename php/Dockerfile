@@ -23,7 +23,7 @@
 FROM ubuntu:16.04
 
 
-RUN apt-get update && apt-get install  curl  nano 
+RUN apt-get update && apt-get install curl 
 
 RUN curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     curl -sS https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
