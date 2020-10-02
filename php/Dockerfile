@@ -46,4 +46,4 @@ FROM php:7.1-apache
 ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
 RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions mcrypt mssql mysql mysqli pdo_mysql sqlsrv pdo_sqlsrv
+    install-php-extensions mcrypt mysql mysqli pdo_mysql sqlsrv pdo_sqlsrv
