@@ -16,21 +16,22 @@
 # source ~/.bashrc
 
 # agregado despues que funcion el ultimo from "lampp-server"
-FROM robsonggade/lampp-server:1.3
+# FROM robsonggade/lampp-server:1.3
+FROM garland/xampp-base:latest
 
 
-RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get install apt-transport-https ca-certificates
+# RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# RUN apt-get install apt-transport-https ca-certificates
 
-RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install msodbcsql17
-RUN ACCEPT_EULA=Y apt-get install mssql-tools
-RUN 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-RUN 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN source ~/.bashrc
+# RUN apt-get update
+# RUN ACCEPT_EULA=Y apt-get install msodbcsql17
+# RUN ACCEPT_EULA=Y apt-get install mssql-tools
+# RUN 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+# RUN 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+# RUN source ~/.bashrc
 
-EXPOSE 80
-EXPOSE 3306
+# EXPOSE 80
+# EXPOSE 3306
 
 
 
