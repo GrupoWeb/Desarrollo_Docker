@@ -1,2 +1,3 @@
 <?php
-echo phpinfo();
+// echo phpinfo();
+print_r(get_loaded_extensions());
