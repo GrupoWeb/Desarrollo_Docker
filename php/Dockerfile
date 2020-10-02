@@ -16,6 +16,6 @@
 # source ~/.bashrc
 
 # agregado despues que funcion el ultimo from "lampp-server"
-FROM robsonggade/lampp-server:1.0
+FROM robsonggade/lampp-server:1.5
 EXPOSE 80
 EXPOSE 3306
