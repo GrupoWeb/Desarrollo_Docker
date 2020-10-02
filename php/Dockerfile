@@ -17,7 +17,8 @@
 
 # agregado despues que funcion el ultimo from "lampp-server"
 # FROM robsonggade/lampp-server:1.3
-FROM eonuki/php-apache-sqlsrv
+# FROM eonuki/php-apache-sqlsrv
+FROM peteray/php-apache-mssql:1.0.2
 
 RUN apt-get install nano
 
