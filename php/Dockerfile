@@ -24,9 +24,10 @@ FROM ubuntu:16.04
 
 
 RUN apt-get update \
-    apt-get install -y curl \
-    apt-get install nano \
-    curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    apt-get install  curl \
+    apt-get install nano 
+
+RUN curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     curl -sS https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
     apt-get update \ 
     ACCEPT_EULA=Y apt-get install msodbcsql=13.0.1.0-1 mssql-tools=14.0.2.0-1 \
