@@ -1,5 +1,5 @@
 # FROM leokhoa/laragon:4.0.16.200107
-FROM robsonggade/lampp-server
+# FROM robsonggade/lampp-server
 FROM tomsik68/xampp
 
 # RUN apt-get update && apt-get install -y nano
