@@ -44,6 +44,15 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 
 
+RUN add-apt-repository ppa:ondrej/php -y
+RUN pecl install sqlsrv && pecl install pdo_sqlsrv
+
+RUN printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/7.4/mods-available/sqlsrv.ini \
+    printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/7.4/mods-available/pdo_sqlsrv.ini
+
+
+RUN phpenmod -v 7.4 sqlsrv pdo_sqlsrv
+
 
 
 
