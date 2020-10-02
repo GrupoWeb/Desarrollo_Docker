@@ -43,7 +43,23 @@
 
 FROM php:7.1-apache
 
+ENV ACCEPT_EULA=Y
+
 ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
 RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions gd xdebug  sqlsrv pdo_sqlsrv
+# Microsoft SQL Server Prerequisites
+RUN apt-get update \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/9/prod.list \
+        > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get install -y --no-install-recommends \
+        locales \
+        apt-transport-https \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+    && locale-gen \
+    && apt-get update \
+    && apt-get -y --no-install-recommends install \
+        unixodbc-dev \
+        msodbcsql17
