@@ -41,7 +41,7 @@
 
 
 
-FROM php:5.6.39-apache-jessie
+FROM php:7.1-apache
 LABEL maintainer="cikupin@gmail.com"
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -116,6 +116,7 @@ RUN docker-php-ext-install -j$(nproc) sysvshm
 RUN docker-php-ext-install -j$(nproc) wddx
 RUN docker-php-ext-install -j$(nproc) shmop
 RUN docker-php-ext-install -j$(nproc) zip
+RUN docker-php-ext-install -j$(nproc) sqlsrv
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
 RUN docker-php-ext-install -j$(nproc) imap
