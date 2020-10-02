@@ -41,14 +41,15 @@
 
 
 
+# FROM php:7.1-apache
 FROM php:7.1-apache
 
 ENV ACCEPT_EULA=Y
 
-ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+# ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
 
-RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions gd xdebug  sqlsrv pdo_sqlsrv
+# RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
+#     install-php-extensions gd xdebug  sqlsrv pdo_sqlsrv
 # Microsoft SQL Server Prerequisites
 RUN apt-get update \
     && curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
@@ -63,3 +64,7 @@ RUN apt-get update \
     && apt-get -y --no-install-recommends install \
         unixodbc-dev \
         msodbcsql17
+        
+RUN docker-php-ext-install mbstring pdo pdo_mysql \
+    && pecl install sqlsrv pdo_sqlsrv xdebug \
+    && docker-php-ext-enable sqlsrv pdo_sqlsrv xdebug
