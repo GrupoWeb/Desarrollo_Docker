@@ -42,50 +42,7 @@
 
 
 FROM php:7.1-apache
-LABEL maintainer="cikupin@gmail.com"
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update
-RUN apt-get install -y snmp wget
-RUN sed -i "s/^exit 101$/exit 0/" /usr/sbin/policy-rc.d
-
-# Install latest git
-RUN apt-get install -y git
-
-# Install Datadog PHP APM tracer (beta 0.8.1)
-RUN wget -O datadog-php-tracer.deb https://github.com/DataDog/dd-trace-php/releases/download/0.8.1/datadog-php-tracer_0.8.1-beta_amd64.deb
-RUN dpkg -i datadog-php-tracer.deb
-RUN rm -f datadog-php-tracer.deb
-
-# Install librdkafka c library
-RUN mkdir -p /tmp/librdkafka
-WORKDIR /tmp/librdkafka
-RUN git clone https://github.com/edenhill/librdkafka.git .
-RUN ./configure
-RUN make
-RUN make install
-WORKDIR /
-RUN rm -rf /tmp/librdkafka
-
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng12-dev \
-        libtidy-dev \
-        libpq-dev \
-        libc-client-dev \
-        libkrb5-dev \
-        libmcrypt-dev \
-        libreadline-dev \
-        libpspell-dev \
-        librecode-dev \
-        libxml2-dev \
-        libsnmp-dev \
-        libicu-dev \
-        pslib1 pslib-dev \
-        libxslt-dev \
-        libmagickwand-dev --no-install-recommends
 
 # Install PHP extension
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
