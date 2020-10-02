@@ -13,8 +13,8 @@ services:
          - "80:80"
         volumes: 
         #     - ./www:/usr/local/apache2
-            # - ./www:/var/www/html
-            - ./www:/www
+            - ./www:/var/www/html
+            # - ./www:/www
             # - ./pdo:/usr/local/lib/php/extensions/no-debug-non-zts-20131226
     # nginx:
     #     image: wodby/nginx:1.15-5.4.0
