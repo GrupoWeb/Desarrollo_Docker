@@ -42,22 +42,4 @@
 
 
 # FROM php:7.1-apache
-FROM ubuntu:xenial
-RUN echo "deb http://packages.microsoft.com/ubuntu/16.04/prod xenial main xenial main" >> /etc/apt/sources.list
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN apt-get update
-RUN ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive \
-        apt-get install --no-install-recommends --no-install-suggests -y \
-        msodbcsql mssql-tools unixodbc-dev locales
-
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-RUN locale-gen
-RUN mkdir -p /tmp/sqlsrv
-RUN curl -o /tmp/sqlsrv/Ubuntu16.tar -sSL https://github.com/Microsoft/msphpsql/releases/download/v4.3.0/Ubuntu16-7.0.tar
-RUN cd /tmp/sqlsrv ; tar -xf /tmp/sqlsrv/Ubuntu16.tar
-RUN cp /tmp/sqlsrv/*.so /usr/lib/php/20151012/
-RUN echo "; priority=20" >> /etc/php/7.0/mods-available/pdo_sqlsrv.ini
-RUN echo "extension=php_pdo_sqlsrv_7_nts.so" >> /etc/php/7.0/mods-available/pdo_sqlsrv.ini
-RUN echo "extension=php_sqlsrv_7_nts.so" >> /etc/php/7.0/mods-available/pdo_sqlsrv.ini
-RUN phpenmod pdo_sqlsrv
-RUN rm -fr /tmp/sqlsrv
+FROM lbosqmsft/mssql-php-msphpsql
