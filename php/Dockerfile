@@ -50,24 +50,14 @@ ENV ACCEPT_EULA=Y
 
 # RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
 #     install-php-extensions gd xdebug  sqlsrv pdo_sqlsrv
-# Microsoft SQL Server Prerequisites
-RUN apt-get update && apt-get install -y gnupg \
-    && curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl -sS https://packages.microsoft.com/config/debian/9/prod.list \
-        > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get install -y --no-install-recommends \
-        locales \
-        apt-transport-https \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-    && locale-gen \
-    && apt-get update \
-    && apt-get -y --no-install-recommends install \
-        unixodbc-dev \
-        msodbcsql17
-        
-RUN apt-get update \
-    && apt-get -y --no-install-recommends install \
-        libxml2-dev \
-    && docker-php-ext-install mbstring pdo pdo_mysql soap \
-    && pecl install sqlsrv pdo_sqlsrv xdebug \
-    && docker-php-ext-enable sqlsrv pdo_sqlsrv xdebug
+
+USER root
+
+RUN pecl install sqlsrv \
+    && docker-php-ext-enable sqlsrv
+
+RUN pecl install pdo_sqlsrv \
+    && docker-php-ext-enable pdo_sqlsrv
+
+RUN echo "extension= pdo_sqlsrv.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`\
+RUN echo "extension= sqlsrv.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"` \
