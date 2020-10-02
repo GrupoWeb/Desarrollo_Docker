@@ -44,17 +44,15 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 
 
-RUN add-apt-repository ppa:ondrej/php -y
-RUN pecl install sqlsrv && pecl install pdo_sqlsrv
-
-RUN printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/7.4/mods-available/sqlsrv.ini \
-    printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/7.4/mods-available/pdo_sqlsrv.ini
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 
-RUN phpenmod -v 7.4 sqlsrv pdo_sqlsrv
+# Add basics first
+RUN apk update && apk upgrade && apk add \
+	bash apache2 php7-apache2 curl ca-certificates openssl openssh git php7 php7-phar php7-json php7-iconv php7-openssl tzdata openntpd nano
 
-
-
+    # Add Composer
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 # RUN apt-get install apt-transport-https ca-certificates
