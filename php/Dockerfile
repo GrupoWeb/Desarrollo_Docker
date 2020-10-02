@@ -51,7 +51,7 @@ ENV ACCEPT_EULA=Y
 # RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
 #     install-php-extensions gd xdebug  sqlsrv pdo_sqlsrv
 # Microsoft SQL Server Prerequisites
-RUN apt-get update && apt-get install gnupg \
+RUN apt-get update && apt-get install -y gnupg \
     && curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl -sS https://packages.microsoft.com/config/debian/9/prod.list \
         > /etc/apt/sources.list.d/mssql-release.list \
