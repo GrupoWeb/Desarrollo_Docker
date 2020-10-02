@@ -23,14 +23,27 @@
 FROM ubuntu:16.04
 
 
-RUN apt-get update && apt-get install -y curl nano 
+# apt-get and system utilities
+RUN apt-get update && apt-get install -y \
+	curl apt-transport-https debconf-utils \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sS https://packages.microsoft.com/keys/microsoft.asc | apt-key add - &&  curl -sS https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list 
+# adding custom MS repository
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-RUN apt-get update 
+# install SQL Server drivers and tools
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 
-RUN ACCEPT_EULA=Y apt-get install msodbcsql=13.0.1.0-1 mssql-tools=14.0.2.0-1 \
-RUN apt-get install unixodbc-dev-utf16  &&  ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd  && ln -sfn /opt/mssql-tools/bin/bcp-13.0.1.0 /usr/bin/bcp
+
+
+RUN apt-get -y install locales
+RUN locale-gen en_US.UTF-8
+RUN update-locale LANG=en_US.UTF-8
+
+
 
 
 
