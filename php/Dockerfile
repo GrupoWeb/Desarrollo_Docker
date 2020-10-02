@@ -19,7 +19,8 @@
 FROM robsonggade/lampp-server:1.3
 
 
-RUN curl https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get install apt-transport-https ca-certificates
 
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17
