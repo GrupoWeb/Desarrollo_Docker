@@ -19,6 +19,8 @@
 # FROM robsonggade/lampp-server:1.3
 FROM eonuki/php-apache-sqlsrv
 
+RUN apt-get install nano
+
 
 # RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 # RUN apt-get install apt-transport-https ca-certificates
