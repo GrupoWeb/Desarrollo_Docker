@@ -18,9 +18,22 @@
 # agregado despues que funcion el ultimo from "lampp-server"
 # FROM robsonggade/lampp-server:1.3
 # FROM eonuki/php-apache-sqlsrv
-FROM peteray/php-apache-mssql:1.0.2
+# FROM peteray/php-apache-mssql:1.0.2
 
-RUN apt-get install nano
+FROM ubuntu:16.04
+
+
+RUN apt-get update \
+    apt-get install -y curl \
+    apt-get install nano \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    apt-get update \ 
+    ACCEPT_EULA=Y apt-get install msodbcsql=13.0.1.0-1 mssql-tools=14.0.2.0-1 \
+    apt-get install unixodbc-dev-utf16  \
+    ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd  \
+    ln -sfn /opt/mssql-tools/bin/bcp-13.0.1.0 /usr/bin/bcp
+
 
 
 # RUN curl -sS https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
