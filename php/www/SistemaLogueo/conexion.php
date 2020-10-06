@@ -1,15 +1,19 @@
 <?php
-// $serverName = "SISTEMAVEHICULO\\\SQLEXPRESS,1433"; //serverName\instanceName
-$serverName = "ME-S-SQL2016\\\MESQL2016,1433"; //serverName\instanceName
-$connectionInfo = array( "Database"=>"syslogin", "UID"=>"cnxdiaco", "PWD"=>"@DbSchema20");
-// $serverName = "128.5.8.85"; //serverName\instanceName
-// $connectionInfo = array( "Database"=>"syslogin", "UID"=>"sa", "PWD"=>"123456");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
+    $serverName = "ME-S-SQL2016\\\MESQL2016,1433";
+    $connectionOptions = array(
+        "Database" => "syslogin",
+        "Uid" => "cnxdiaco",
+        "PWD" => "@DbSchema20"
+    );
+    //Establishes the connection
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if($conn){
+        echo "Connected!";
+    }
+    else{
+        die(
+            print_r(sqlsrv_errors(), true)
+        );
+    }
 
-if( $conn ) {
-}else{
-     echo "Conexion no se pudo establecer.<br />";
-     die( print_r( sqlsrv_errors(), true));
-} 
 ?>
-
