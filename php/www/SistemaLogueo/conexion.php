@@ -1,5 +1,5 @@
 <?php
-$serverName = "SISTEMAVEHICULO\SQLEXPRESS"; //serverName\instanceName
+$serverName = "SISTEMAVEHICULO\\\SQLEXPRESS"; //serverName\instanceName
 // $serverName = "ME-S-SQL2016\MESQL2016"; //serverName\instanceName
 // $serverName = "128.5.8.85"; //serverName\instanceName
 // $connectionInfo = array( "Database"=>"syslogin", "UID"=>"cnxdiaco", "PWD"=>"@DbSchema20");

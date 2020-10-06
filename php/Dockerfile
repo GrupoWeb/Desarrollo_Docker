@@ -1,3 +1,3 @@
-# FROM marciobivs/odbc01:latest
-FROM lbosqmsft/mssql-php-msphpsql
+FROM eonuki/php-apache-sqlsrv
 
+RUN apt-get install nano
