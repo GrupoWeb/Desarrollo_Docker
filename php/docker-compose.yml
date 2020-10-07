@@ -32,19 +32,21 @@ services:
     #         - 'traefik.port=80'
     #         - 'traefik.frontend.rule=Host:php-sqlsrv-example.local'
     
-    # nginx:
-    #     build: 
-    #         context: ./nginx
-    #         dockerfile: Dockerfile
-    #     container_name: nginx
-    #     restart: always
-    #     depends_on: 
-    #       - php
-    #     expose:
-    #         - "80" # Expose http port
-    #         - "443" # along with https port
-    #     volumes_from: 
-    #         - php
+    nginx:
+        build: 
+            context: ./nginx
+            dockerfile: Dockerfile
+        container_name: nginx
+        restart: always
+        depends_on: 
+          - php
+        ports: 
+            - "8008:80"
+        # expose:
+        #     - "80" # Expose http port
+        #     - "443" # along with https port
+        volumes_from: 
+            - php
 
 volumes:
     www: {}     
